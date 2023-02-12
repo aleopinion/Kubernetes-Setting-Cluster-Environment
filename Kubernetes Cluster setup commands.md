@@ -35,7 +35,7 @@ yum install -y yum-utils
 **This is because we are using the persistent disk to store data. In this command, we are**
 **installing 2 things at the same time - device map and also LVM2.**
 ```
-**yum install -y device-mapper-persistent-data lvm2 
+yum install -y device-mapper-persistent-data lvm2 
 ```
 
 **7. => To download or import the Docker registry. The file saved to /etc/yum.repos.d/docker-ce.repo**
@@ -113,7 +113,7 @@ swapoff -a
 sed -i '/ swap / s/^/#/' /etc/fstab
 ```
 
-**21. => Using cat to establish/create a particular repository within your 
+**21. => Using cat to establish/create a particular repository within your**
 **yum repo environment for k8s which is needed to configure k8s**
 ```
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
@@ -166,12 +166,12 @@ systemctl status kubelet
 sudo kubelet --version 
 ```
 
-**-----------------------------------------------------------------------------------------**
+
 **Time to create a machine Image out of the Master and used to create the worker nodes**
 **You may stop the VM or not before taking the Machine Image of the VM.**
 **CREATE MACHINE IMAGE OUT OF THE VM**
 **THEN CREATE 2 WORKER NODES USING THE MACHINE IMAGE.**
-**-------------------------------------------------------------------------------------------**
+
 
 **=====> CONTINUE TO CONFIGURE THE MASTER NODE <======**
 
@@ -219,7 +219,7 @@ systemctl status docker
 rm /etc/containerd/config.toml ==> y 
 ```
 
-**. 39 => To restart containerd. Failure to do this can throw you into errors.**
+**39 => To restart containerd. Failure to do this can throw you into errors.**
 ```
 systemctl restart containerd 
 ```
@@ -271,7 +271,7 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-**46. => To identify the nodes running within the cluster => STATUS = "NotReady" because 
+**46. => To identify the nodes running within the cluster => STATUS = "NotReady" because** 
 **the cluster network has not being established.**
 ```
 kubectl get nodes 
@@ -289,13 +289,12 @@ kubectl get nodes
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 ```
 
-**Same as command #47.
+**Same as command #47**
 ``` 
 kubectl create -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 ```
 
-**48. => To identify the nodes running within the cluster, and to confirm that the network 
-**just set up is good. STATUS = "Ready"**
+**48. => To identify the nodes running within the cluster, and to confirm that the network just set up is good. STATUS = "Ready"**
 ```
 kubectl get nodes 
 ```
