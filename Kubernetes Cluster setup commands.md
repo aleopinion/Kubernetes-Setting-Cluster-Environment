@@ -356,13 +356,7 @@ systemctl restart docker
 ```
 
 **57. => the JOIN Command => to join the workers to the cluster. This will be different for every set up.**
-```
-kubeadm join 10.182.0.10:6443 --token o5mz47.b0wovaxcrr2fmbxx --discovery-token-ca-cert-hash sha256:c0d9ecb0800c85a58607751ddd1e3c7955bf2a11e4d29c4e592d17948cc32872
-```
-```
-kubeadm join 10.182.0.10:6443 --token o5mz47.b0wovaxcrr2fmbxx \
-  --discovery-token-ca-cert-hash sha256:c0d9ecb0800c85a58607751ddd1e3c7955bf2a11e4d29c4e592d17948cc32872
-```
+**Run the key command genrated from the Master Node at the Worker nodes to JOIN the workers to the cluster**
 
 **58. => Run from the Master-Node to identify the nodes that are in the cluster**
 ```
