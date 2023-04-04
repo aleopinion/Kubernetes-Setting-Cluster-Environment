@@ -216,7 +216,10 @@ systemctl status docker
 
 **38. => To remove the file distubbing Docker from containerd**
 ```
-rm /etc/containerd/config.toml ==> y 
+rm /etc/containerd/config.toml
+```
+```
+y
 ```
 
 **39 => To restart containerd. Failure to do this can throw you into errors.**
