@@ -342,7 +342,7 @@ cd
 
 **54. => Remove the config.toml file from containerd**
 ```
-rm /etc/containerd/config.toml      y 
+rm /etc/containerd/config.toml
 ```
 ```
 y
