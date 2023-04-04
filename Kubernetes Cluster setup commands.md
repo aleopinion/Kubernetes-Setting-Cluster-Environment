@@ -140,13 +140,13 @@ sudo su
 cd 
 ```
 
-**25. => You are telling the k8s installation process to continue or pass should** 
+**25. => In this next command below, you are telling the k8s installation process to continue or pass should** 
 **it experience anything or an error that might disrupt the process.**
 ```
 yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes 
 ```
  
-**26. => To start kubelet => but will fail or break because it needs kubeadm to be running before it can work**
+**26. => To start kubelet => but will fail or break because it needs kubeadm to be initialized and running** **before it can work**
 ```
 systemctl start kubelet 
 ```
@@ -204,7 +204,7 @@ systemctl disable firewalld
 systemctl status firewalld 
 ```
 
-**36. => To initialize the kubeadm => Error => complaining that container runtime = Docker not running.**
+**36. => The command below is to initialize the kubeadm => gave an Error => complaining that container ** **runtime => Docker not running.**
 ```
 kubeadm init --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=NumCPU 
 ```
@@ -232,12 +232,31 @@ systemctl restart containerd
 systemctl status docker 
 ```
 
-**41. => Successful run for me. The "--ignore-preflight-errors=NumCPU" in the command it to tell**
-**k8s to ignore any error that could arise from cpu not enough for the process**
+**41. => Ran the command to initialize kubeadm again and it was successful run for me.** 
+**The "--ignore-preflight-errors=NumCPU" in the command it is to tell k8s to ignore**
+**any error that could arise from cpu that may suggest that there is not enough for the process**
 ```
 kubeadm init --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=NumCPU 
 ```
+**=> Since kubeadm has been initialized and running, now it is time to start kubelet and check if all is ok**
+```
+systemctl start kubelet 
+```
 
+**=> To enable kubelet for persistency**
+```
+systemctl enable kubelet 
+```
+
+**=> Status = Failed => Beacause kubeadm has not started running. kubelet starts when initializing kubeadm.**
+```
+systemctl status kubelet
+```
+
+**=> To check the version of the kublet**
+```
+sudo kubelet --version 
+```
 
 
 
