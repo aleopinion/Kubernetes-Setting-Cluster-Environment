@@ -140,8 +140,8 @@ sudo su
 cd 
 ```
 
-**25. => In this next command below, you are telling the k8s installation process to continue or pass should** 
-**it experience anything or an error that might disrupt the process.**
+**25. => To Install Kubeadm, Kubelet, and kubectl. In this next command below, you are telling the k8s** 
+**installation process to continue or pass should, in case it experiences anything or an error that might disrupt the process.**
 ```
 yum install -y kubelet kubeadm kubectl --disableexcludes=kubernetes 
 ```
@@ -156,7 +156,8 @@ systemctl start kubelet
 systemctl enable kubelet 
 ```
 
-**28. => Status = Failed => Beacause kubeadm has not started running. kubelet starts when initializing kubeadm.**
+**28. => To check the Status of kubelet => Failed => beacause kubeadm has not started running.** 
+**kubelet starts when initializing kubeadm.**
 ```
 systemctl status kubelet
 ```
@@ -167,7 +168,7 @@ sudo kubelet --version
 ```
 
 
-**Time to create a machine Image out of the Master and used to create the worker nodes**
+**At this point, it is time to create a machine Image out of the Master and used to create the worker nodes**
 **You may stop the VM or not before taking the Machine Image of the VM.**
 **CREATE MACHINE IMAGE OUT OF THE VM**
 **THEN CREATE 2 WORKER NODES USING THE MACHINE IMAGE.**
@@ -204,7 +205,8 @@ systemctl disable firewalld
 systemctl status firewalld 
 ```
 
-**36. => The command below is to initialize the kubeadm => gave an Error => complaining that container ** **runtime => Docker not running.**
+**36. => The command below is to initialize the kubeadm => but gave an Error**
+**Complaining that container about container runtime => Docker not running.**
 ```
 kubeadm init --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=NumCPU 
 ```
@@ -238,30 +240,30 @@ systemctl status docker
 ```
 kubeadm init --pod-network-cidr=192.168.0.0/16 --ignore-preflight-errors=NumCPU 
 ```
-**=> Since kubeadm has been initialized and running, now it is time to start kubelet and check if all is ok**
+**42 => Since kubeadm has been initialized and running, now it is time to start kubelet and check if all is ok**
 ```
 systemctl start kubelet 
 ```
 
-**=> To enable kubelet for persistency**
+**43 => To enable kubelet for persistency**
 ```
 systemctl enable kubelet 
 ```
 
-**=> Status = Failed => Beacause kubeadm has not started running. kubelet starts when initializing kubeadm.**
+**44 => Status => kubeadm has started running. kubelet starts when initializing kubeadm.**
 ```
 systemctl status kubelet
 ```
 
-**=> To check the version of the kublet**
+**45 => To check the version of the kublet**
 ```
 sudo kubelet --version 
 ```
 
 
 
-**====>>> Commands displayed after kubeadm initialisation which you need to run either a regular user or as root <<<====**   
-**To start using your cluster, you need to run the following as a regular user:** 
+**====>>> Commands displayed after kubeadm initialisation which you need to run either as a regular user or as root <<<====**   
+**To start using your cluster, you need to run the following 3 commands as a regular user:** 
 
   **mkdir -p $HOME/.kube**
   **sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config**
@@ -272,28 +274,28 @@ sudo kubelet --version
   **export KUBECONFIG=/etc/kubernetes/admin.conf**
 
 
-**42. => To identify any node running within the cluster. Command failed because we have not** 
+**46. => To identify any node running within the cluster. Command failed because we have not** 
 **set majority of the global variables and k8s configurations.**
 ```
 kubectl get nodes 
 ```
 
-**43. => 1st command to be set up as a regular user**
+**47. => 1st command to be set up as a regular user**
 ```
 mkdir -p $HOME/.kube
 ```
 
-**44. => 2st command to be set up as a regular user. We did not use the sudo since we are working as root**
+**48. => 2st command to be set up as a regular user. We did not use the sudo since we are working as root**
 ```
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config 
 ```
 
-**45. => 3st command to be set up as a regular user. We did not use the sudo since we are working as root**
+**49. => 3st command to be set up as a regular user. We did not use the sudo since we are working as root**
 ```
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 ```
 
-**46. => To identify the nodes running within the cluster => STATUS = "NotReady" because** 
+**50. => To identify the nodes running within the cluster => STATUS = "NotReady" because** 
 **the cluster network has not being established.**
 ```
 kubectl get nodes 
@@ -306,27 +308,27 @@ kubectl get nodes
 **https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml ==> Http path to the file to configure kubernetes networking from Flannel documentation**
 **-----------------------------------------------------------------------------------------**
 
-**47. => To configure the Flannel k8s networking**
+**51. => To configure the Flannel k8s networking**
 ```
 kubectl apply -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 ```
 
-**Same as command #47**
+**Same as command #51**
 ``` 
 kubectl create -f https://raw.githubusercontent.com/flannel-io/flannel/master/Documentation/kube-flannel.yml
 ```
 
-**48. => To identify the nodes running within the cluster, and to confirm that the network just set up is good. STATUS = "Ready"**
+**52. => To identify the nodes running within the cluster, and to confirm that the network just set up is good. STATUS = "Ready"**
 ```
 kubectl get nodes 
 ```
  
-**49. => To check the stauts of kubelet after kubeadm is initialized**
+**53. => To check the stauts of kubelet after kubeadm is initialized**
 ```
 systemctl status kubelet 
 ```
 
-**Identifies the Master Node (control Plane)**
+**54 => Identifies the Master Node (control Plane)**
 ```
 kubectl get nodes 
 ```
@@ -335,12 +337,12 @@ kubectl get nodes
 
 **====> TO CONFIGURE THE WORKER NODES <=======**
 
-**50. => You run this command at the Masteer Node and use the Token generated at the Workers**
+**55. => You run this command at the Master Node and use the Token generated at the Workers**
 ```
 kubeadm token create --print-join-command 
 ```
 
-**51. => the JOIN Command => to join the workers to the cluster. This will be different for every set up.**
+**56. => the JOIN Command => to join the workers to the cluster. This will be different for every set up.**
 ```
 kubeadm join 10.182.0.10:6443 --token o5mz47.b0wovaxcrr2fmbxx --discovery-token-ca-cert-hash sha256:c0d9ecb0800c85a58607751ddd1e3c7955bf2a11e4d29c4e592d17948cc32872
 ```
@@ -349,7 +351,7 @@ kubeadm join 10.182.0.10:6443 --token o5mz47.b0wovaxcrr2fmbxx \
   --discovery-token-ca-cert-hash sha256:c0d9ecb0800c85a58607751ddd1e3c7955bf2a11e4d29c4e592d17948cc32872
 ```
 
-**Error when we ran the join command at the level of the worker to join the cluster.**
+**Error when running the join command at the level of the worker to join the cluster.**
 **Same error when setting up the master. So went to the workers and ran the following commands,** 
 **as earlier done with the Master node so as to get the workers working properly**
 ```
@@ -359,7 +361,7 @@ sudo su
 cd 
 ```
 
-**54. => Remove the config.toml file from containerd**
+**57. => Remove the config.toml file from containerd**
 ```
 rm /etc/containerd/config.toml
 ```
@@ -367,12 +369,12 @@ rm /etc/containerd/config.toml
 y
 ```
 
-**55. => Restart containerd => very important step**
+**58. => Restart containerd => very important step**
 ```
 systemctl restart containerd 
 ```
 
-**56. => Restart Docker and run the join command again as shown below*
+**56. => Restart Docker and run the join command again as shown below**
 ```
 systemctl restart docker 
 ```
